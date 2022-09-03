@@ -20,7 +20,7 @@ except:
 
 @app.route("/")
 def awal():
-    return("Selamat datang")
+    return(database.coba)
 
 @app.route("/input/sensor")
 def data():
