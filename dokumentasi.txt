@@ -1,0 +1,29 @@
+install venv :
+python -m venv venv
+
+install package :
+pip install -r "nama file"
+
+
+===========================
+push data ke github :
+	git status
+	ketik ulang yang di berikan
+
+commit :
+	memberikan nama commit
+
+ketika error :
+	pastikan folder .git cuma satu
+
+step selanjutnya :
+	view, command pallete, remote, github, url, nama remote, commit
+
+=========================
+push data ke github2
+COMMAND:
+git init (membuat .git)
+git add .
+git commit -m <nama commit>
+git remote add <nama sumber> <link github>
+git push <nama sumber> <branch>
