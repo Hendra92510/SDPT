@@ -8,12 +8,13 @@ app = Flask(__name__)
 
 try:
     cluster = MongoClient(
-        database.database
+        'mongodb+srv://sdpt:Wara03170310409@cluster1.2cvf8kn.mongodb.net/test'
         ,connect=False,
         serverSelectionTimeoutMS = 1000
     )
     db = cluster['test']
-    collection = db['test'] 
+    collection = db['hendra']
+    collection.insert_one({"_id":100}) 
 except:
     print("ERROR - Cannot connect to db")
 ###########################################
