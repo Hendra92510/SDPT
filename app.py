@@ -1,28 +1,32 @@
 from flask import Flask, redirect, url_for, render_template, request
 import pymongo
+from pymongo import MongoClient
 from bson.objectid import ObjectId
+import database
 
 app = Flask(__name__)
 
 try:
-    mongo = pymongo.MongoClient(
-        host = "localhost",
-        port = 27017,
+    cluster = MongoClient(
+        database.database
+        ,connect=False,
         serverSelectionTimeoutMS = 1000
     )
-    db = mongo.company.users
-    mongo.server_info()
+    db = cluster['test']
+    collection = db['test'] 
 except:
     print("ERROR - Cannot connect to db")
 ###########################################
 
 @app.route("/")
 def awal():
-    return render_template("main.html")
+    return("Selamat datang")
 
 @app.route("/input/sensor")
 def data():
     data = request.args.get("data")
+    push = ({"data":data})
+    collection.insert_one(push)
     return("nilai adalah {}".format(data))
 
 ###########################################
