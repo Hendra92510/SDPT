@@ -18,7 +18,7 @@ except:
 
 @app.route("/")
 def awal():
-    return("Selamat datang")
+    return render_template("main.html")
 
 @app.route("/input/sensor")
 def data():
@@ -27,4 +27,4 @@ def data():
 
 ###########################################
 if __name__ == "__main__":
-    app.run(port=9090, debug=False,host='0.0.0.0')
+    app.run(port=9090, debug=True,host='0.0.0.0')
