@@ -28,7 +28,7 @@ except:
 
 @app.route("/")
 def awal():
-    return render_template('coba.html')
+    return render_template('home.html')
 
 @app.route("/input/sensor")
 def data():
@@ -37,6 +37,13 @@ def data():
     # collection.insert_one(push)
     return render_template('main.html', data=data)
 
+@app.route("/datapengguna")
+def dataPengguna():
+    return render_template('dataPengguna.html')
+
+@app.route("/report")
+def report():
+    return render_template("report.html")
 ###########################################
 if __name__ == "__main__":
     app.run(port=9090, debug=True,host='0.0.0.0')

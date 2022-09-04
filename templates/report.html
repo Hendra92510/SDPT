@@ -67,18 +67,49 @@
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="./datapengguna">Data Pengguna</a>
+                <a class="nav-link" href="/datapengguna">Data Pengguna</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="./report">Report</a>
+                <a class="nav-link" href="/report">Report</a>
                 </li>
             </ul>
+            <span class="navbar-text">
+                <form method="POST" action="" class="d-flex justify-content-start py-3">
+                    <div class="col-auto">
+                        <input id="filter" class="form-control me-2" type="number" placeholder="Search Hastag.." aria-label="Search" name="search" onkeyup="stoppedTyping()">
+                    </div>
+                        <div class="col-auto">
+                            <input type="submit" class="btn btn-primary mb-3" value="Search" id="search_button" onclick="verify()" disabled/> 
+                            <!--<button id="search_button" class="btn btn-primary mb-3" type="submit" onclick="verify()" disabled>Search</button>-->
+                        </div>
+                    </div>
+                </form>
+            </span>
             </div>
         </div>
     </nav>
 {% endblock %}
+{% block script %}
+    <script>
+        const input1 = document.querySelector("#filter");  
+        const btn = document.querySelector("#search_button");    
+        
+        // Use the same validation handler for both inputs
+        input1.addEventListener("input", validate); 
+        
+        function validate(){
+        // Check that neither input is empty
+        if(input1.value === ""){
+            btn.setAttribute("disabled","disabled");
+        } else {
+            btn.removeAttribute("disabled");  
+        }
+        }    
+    </script>
+
+{% endblock %}
 {% block content %}
 
-    Selamat datang Home
+    Selamat datang report
 
 {% endblock %}
