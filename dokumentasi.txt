@@ -27,3 +27,25 @@ git add .
 git commit -m <nama commit>
 git remote add <nama sumber> <link github>
 git push <nama sumber> <branch>
+
+=========================
+push data github versi asli
+echo "# SDPT" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:Hendra92510/SDPT.git
+git push -u origin main
+
+=========================
+Menyambungkan mongo ke heroku
+
+siapkan dotenv untuk membaca file .env untuk penyimpanan user dan password
+import os
+siapkan variabel di dalam .env untuk user dan password. contoh:
+	USER_DB = 'kinderjoi991'
+	PASSWORD_DB = '12345'
+lalu masukkan .env ke gitignore
+lakukan koneksi seperti pymongo pada umumnya dengan alamat mongodb yang di dapat
+tambahkan environment variable di app heroku (nama var harus sama)

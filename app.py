@@ -1,5 +1,4 @@
 from flask import Flask, redirect, url_for, render_template, request
-import pymongo
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
@@ -29,14 +28,14 @@ except:
 
 @app.route("/")
 def awal():
-    return render_template('main.html')
+    return ('Selamat datang semuanya')
 
 @app.route("/input/sensor")
 def data():
     data = request.args.get("data")
-    push = ({"data":data})
-    collection.insert_one(push)
-    return("nilai adalah {}".format(data))
+    # push = ({"data":data})
+    # collection.insert_one(push)
+    return render_template('main.html', data=data)
 
 ###########################################
 if __name__ == "__main__":
