@@ -7,7 +7,7 @@ import database
 import os
 
 load_dotenv()
-DATABASE_URL=f'mongodb+srv://sdpt:{os.environ.get("password")}@cluster1.2cvf8kn.mongodb.net/?retryWrites=true&w=majority'
+DATABASE_URL=f'mongodb+srv://sdpt:<{os.environ.get("password")}>@cluster1.2cvf8kn.mongodb.net/?retryWrites=true&w=majority'
 app = Flask(__name__)
 
 try:
