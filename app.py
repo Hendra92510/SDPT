@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
 import database
-import os
+import os, dns
 
 load_dotenv()
 DATABASE_URL=f'mongodb+srv://sdpt:<{os.environ.get("password")}>@cluster1.2cvf8kn.mongodb.net/?retryWrites=true&w=majority'
