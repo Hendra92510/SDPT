@@ -28,7 +28,7 @@ except:
 
 @app.route("/")
 def awal():
-    return ('Selamat datang semuanya')
+    return render_template('coba.html')
 
 @app.route("/input/sensor")
 def data():

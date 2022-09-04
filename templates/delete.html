@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block title %} EMC {% endblock %}
+{% block modal %}
+
+<div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <!-- <form action="/users" method="post"> -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Delete Device</h5>
+                </div>
+                <h1 class="bi bi-x-circle" style="color:red;font-size:80px; text-align: center;"></h1>
+                <b style="text-align:center; font-size: 24px;">Anda akan menghapus dokumen!</b>
+                <br>
+                <a style="color: #848484; font-size: 18px; text-align: center; font-family: Arial, Helvetica, sans-serif;">Anda yakin untuk menghapus dokumen ini?</a>
+                <div class="modal-footer">
+                    <a href="/page{{pages}}" class="btn btn-secondary">Cancel</a>
+                    <a href="/delete/{{delete}}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+            <div data-bs-toggle="modal" data-bs-target="#popup"></div>
+        <!-- </form>   -->
+    </div>
+</div>
+
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <h1>Employee Motion Control</h1>
+    <div class="d-flex justify-content-end py-2">
+        <!-- TOMBOL POPUP DAFTAR -->
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class='bx bx-plus'></i>
+            Add Device
+        </button>
+        <!-- <button type="submit" class="btn btn-primary"> <i class='bx bx-plus'></i>Add Device</button> -->
+    </div>
+    <form method="POST" action="{{ url_for('search')}}" class="d-flex justify-content-start py-3">
+        <div class="col-auto">
+            <input class="form-control me-2" type="number" placeholder="Search Hastag.." aria-label="Search" name="search">
+        </div>
+            <div class="col-auto">
+            <button class="btn btn-primary mb-3" type="submit">Search</button>
+        </div>
+    </form>
+    
+    <table id="myTable" class="table table-borderless">
+        <thead class="table-light border-0 ">
+            <tr>
+                <th scope="col ">GROUP</th>
+                <th scope="col ">HASTAG</th>
+                <th scope="col ">IMEI</th>
+                <th scope="col ">MACADDR</th>
+                <th scope="col ">MSIDN</th>
+                <th scope="col ">STATUS</th>
+                <th scope="col ">ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in listPage %}
+
+            <tr class="data">
+                <td>{{row['GROUP']}}</td>
+                <td>{{row['HASTAG']}}</td>
+                <td>{{row['IMEI']}}</td>
+                <td>{{row['MACADDR']}}</td>
+                <td>{{row['MSIDN']}}</td>
+                <td>
+                    {% if row['STATUSDEVICE'] == 'NOT ALLOCATED' %}
+                    <span class="badge rounded-pill bg-danger">{{row['STATUSDEVICE']}}</span>
+                    {% elif row['STATUSDEVICE'] == 'ALLOCATED' %}
+                    <span class="badge rounded-pill bg-success">{{row['STATUSDEVICE']}}</span>
+                    {% else %}
+                    <span class="badge rounded-pill bg-warning">{{row['STATUSDEVICE']}}</span>
+                    {% endif %}
+                </td>
+                <td class="flex-row justify-content-between">
+                    <form action="/users" method="post">
+                        <button type="submit" class='btn p-1 bx bxs-info-circle bx-sm text-primary' name="info" value="{{ row['_id'] }}"></button>
+                        <button type="submit" class='btn p-1 bx bxs-edit bx-sm text-primary' name="edit" value="{{ row['_id'] }}"></button>
+                        <button type="submit" class='btn p-1 bx bxs-trash bx-sm text-danger' name="delete" value="{{ row['_id'] }}"></button>
+                    </form>
+                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block footer %}
+
+<nav aria-label="...">
+    <ul class="pagination">
+      <li class="page-item {% if pages-1 == 0 %} disabled {% endif %}">
+        <a class="page-link" href="./page{{pages-1}}">Previous</a>
+      </li>
+      {% for i in range(totalPages) %}
+        <li class="page-item {% if i+1 == pages %} active {% endif %}" aria-current="page">
+            <a class="page-link" href="./page{{ i+1 }}">{{ i+1 }}</a>
+        </li>
+      {% endfor %}
+      <li class="page-item {% if (pages == totalPages) %} disabled {% endif %} "> 
+        <a class="page-link" href="./page{{pages+1}}">Next</a>
+      </li>
+    </ul>
+</nav>
+
+{% endblock %}
+{% block script %}
+    <script>
+        $(document).ready(function(){
+            console.log("windows is loaded")
+            $("#delete").modal("show")
+        })
+    </script>
+{% endblock %}
