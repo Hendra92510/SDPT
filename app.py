@@ -1,16 +1,17 @@
 from flask import Flask, redirect, url_for, render_template, request
 import pymongo
 from pymongo import MongoClient
+from dotenv import load_dotenv
 from bson.objectid import ObjectId
 import database
 
-app = Flask(__name__)
+load_dotenv()
 
+app = Flask(__name__)
+MONGODB_URL=f'mongodb+srv://sdpt:{os.environ.get("password")}@cluster1.2cvf8kn.mongodb.net/?retryWrites=true&w=majority'
 try:
     cluster = MongoClient(
-        'mongodb+srv://sdpt:Wara03170310409@cluster1.2cvf8kn.mongodb.net/test'
-        ,connect=False,
-        serverSelectionTimeoutMS = 1000
+        MONGODB_URL
     )
     db = cluster['test']
     collection = db['hendra']
