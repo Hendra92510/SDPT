@@ -9,7 +9,7 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
-MONGODB_URL=f'mongodb+srv://sdpt:Wara03170310409@cluster1.2cvf8kn.mongodb.net/?retryWrites=true&w=majority'
+MONGODB_URL='mongodb+srv://sdpt:Wara03170310409@cluster1.2cvf8kn.mongodb.net/?retryWrites=true&w=majority'
 try:
     cluster = MongoClient(
         MONGODB_URL
