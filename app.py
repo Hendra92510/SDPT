@@ -8,12 +8,12 @@ import os, dns
 
 load_dotenv()
 #mongodb+srv://sdpt:<password>@cluster1.2cvf8kn.mongodb.net/?retryWrites=true&w=majority
-DATABASE_URL=f'mongodb+srv://{os.environ.get("DB_USER")}:{os.environ.get("DB_PASSWORD")}@cluster1.2cvf8kn.mongodb.net/?retryWrites=true&w=majority'
+
 app = Flask(__name__)
 
 try:
     cluster = MongoClient(
-        DATABASE_URL
+        database.DATABASE_URL
     )
     # cluster = MongoClient(
     #     'mongodb+srv://sdpt:Wara03170310409@cluster1.2cvf8kn.mongodb.net/?retryWrites=true&w=majority'
@@ -29,7 +29,7 @@ except:
 
 @app.route("/")
 def awal():
-    return(database.coba)
+    return render_template('main.html')
 
 @app.route("/input/sensor")
 def data():
