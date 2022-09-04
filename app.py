@@ -5,7 +5,7 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 import database
 
-load_dotenv()
+#load_dotenv()
 
 app = Flask(__name__)
 
