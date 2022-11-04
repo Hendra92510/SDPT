@@ -34,6 +34,41 @@
         </div>
     </div>
 
+    <!-- Modal daftar
+    <div class="modal fade" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="/add_user" class="was-validated", method="POST">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Edit pengguna</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    {% for x in listPage %}
+                    <div class="modal-body">
+                        <div class="mb-3 mt-3">
+                            <label for="nama" class="form-label">Nama</label>
+                            <input type="text" value="{{x['NAMA']}}" class="form-control" id="nama" name="nama" required>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <label for="nim" class="form-label">NIM</label>
+                            <input type="number" value="{{x['NIM']}}" class="form-control" id="nim" name="nim" required>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <label for="prodi" class="form-label">Prodi</label>
+                            <input type="text" value="{{x['PRODI']}}" class="form-control" id="prodi" name="prodi" required>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success" data-bs->Submit</button>
+                    </div>
+                </div>
+                <div data-bs-toggle="modal" data-bs-target="#popup"></div>
+            </form>  
+        </div>
+    </div> -->
+
 {% endblock %}
 {% block head %}
     <nav class="navbar navbar-expand-lg bg-light">
@@ -54,7 +89,7 @@
                 <a class="nav-link" href="/datadeviceDami">Data Device</a>
                 </li>
                 <li class="nav-item">
-                    <a class="list-group-item active" href="/datapenggunaDami">Data Pengguna</a>
+                    <a class="nav-link" href="/datapenggunaDami">Data Pengguna</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/absen?kondisi=true">Absen</a>
@@ -98,9 +133,9 @@
         <!-- <button type="submit" class="btn btn-primary"> <i class='bx bx-plus'></i>Add Device</button> -->
     </div>
     <span class="navbar-brand">
-        <form method="POST" action="/search/{{'pengguna'}}" class="d-flex justify-content-start py-3">
+        <form method="POST" action="/search" class="d-flex justify-content-start py-3">
             <div class="col-auto">
-                <input id="filter" class="form-control me-2" type="number" placeholder="Search NIM.." aria-label="Search" name="search" onkeyup="stoppedTyping()">
+                <input id="filter" class="form-control me-2" type="number" placeholder="Search Hastag.." aria-label="Search" name="search" onkeyup="stoppedTyping()">
             </div>
                 <div class="col-auto">
                     <input type="submit" class="btn btn-primary mb-3" value="Search" id="search_button" onclick="verify()" disabled/> 
@@ -109,6 +144,9 @@
             </div>
         </form>
     </span>
+    <div class="alert alert-warning" role="alert">
+        Search result for Nim : <b>{{src}}, </b> klik <a href="/datapenggunaDami" class="alert-link"> here </a> To back.
+    </div>
     <table id="myTable" class="table table-borderless">
         <thead class="table-light border-0 ">
             <tr>
@@ -118,45 +156,6 @@
                 <th scope="col ">ACTION</th>
             </tr>
         </thead>
-        <tbody>
-            {% for row in listPage %}
-            <tr class="data">
-                <td>{{row['NAMA']}}</td>
-                <td>{{row['NIM']}}</td>
-                <td>{{row['PRODI']}}</td>
-                <td class="flex-row justify-content-between">
-                    <!-- <form action="/users" method="post"> -->
-                        <a href="/infopengguna/{{row['_id']}}/page={{pages}}" class='btn p-1 bx bxs-info-circle bx-sm text-primary'></a>
-                        <a href="/editpengguna/{{row['_id']}}/page={{pages}}" class='btn p-1 bx bxs-edit bx-sm text-primary'></a>
-                        <a href="/deletepengguna/{{row['_id']}}/page={{pages}}" class='btn p-1 bx bxs-trash bx-sm text-danger'></a>
-                    <!-- </form> -->
-                </td>
-            </tr>
 
-            {% endfor %}
-            
-        </tbody>
-    </table>
-</div>
-
-
-{% endblock %}
-{% block footer %}
-
-<nav aria-label="...">
-    <ul class="pagination">
-      <li class="page-item {% if pages-1 == 0 %} disabled {% endif %}">
-        <a class="page-link" href="/datapengguna/page={{pages-1}}">Previous</a>
-      </li>
-      {% for i in range(totalPages) %}
-        <li class="page-item {% if i+1 == pages %} active {% endif %}" aria-current="page">
-            <a class="page-link" href="/datapengguna/page={{ i+1 }}">{{ i+1 }}</a>
-        </li>
-      {% endfor %}
-      <li class="page-item {% if (pages == totalPages) %} disabled {% endif %} "> 
-        <a class="page-link" href="/datapengguna/page={{pages+1}}">Next</a>
-      </li>
-    </ul>
-</nav>
 
 {% endblock %}

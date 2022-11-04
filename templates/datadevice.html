@@ -12,32 +12,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3 mt-3">
-                            <label for="group" class="form-label">Group</label>
-                            <input type="text" class="form-control" id="group" name="group" required>
-                        </div>
-                        <div class="mb-3 mt-3">
                             <label for="hastag" class="form-label">Hastag</label>
                             <input type="number" class="form-control" id="hastag" name="hastag" required>
                         </div>
                         <div class="mb-3 mt-3">
-                            <label for="imei" class="form-label">Imei</label>
-                            <input type="number" class="form-control" id="imei" name="imei" required>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <label for="macaddr" class="form-label">Mac Address</label>
-                            <input type="number" class="form-control" id="macaddr" name="macaddr" required>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <label for="msidn" class="form-label">Msidn</label>
-                            <input type="number" class="form-control" id="msidn" name="msidn" required>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <label for="status" class="form-label">Status Device</label>
-                            <input type="text" class="form-control" id="status" name="status" required>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <label for="unit" class="form-label">Unit ID</label>
-                            <input type="text" class="form-control" id="unit" name="unit" required>
+                            <label for="imei" class="form-label">ID</label>
+                            <input type="number" class="form-control" id="ID" name="ID" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -67,7 +47,7 @@
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="/datadeviceDami">Data Device</a>
+                <a class="list-group-item active" href="/datadeviceDami">Data Device</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/datapenggunaDami">Data Pengguna</a>
@@ -79,6 +59,7 @@
                 <a class="nav-link" href="/report">Report</a>
                 </li>
             </ul>
+            
             </div>
         </div>
     </nav>
@@ -103,18 +84,83 @@
 
 {% endblock %}
 {% block content %}
-<span class="navbar-brand">
-    <form method="POST" action="" class="d-flex justify-content-start py-3">
-        <div class="col-auto">
-            <input id="filter" class="form-control me-2" type="number" placeholder="Search Hastag.." aria-label="Search" name="search" onkeyup="stoppedTyping()">
-        </div>
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-end py-2">
+        <!-- TOMBOL POPUP DAFTAR -->
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class='bx bx-plus'></i>
+            Add Device
+        </button>
+        <!-- <button type="submit" class="btn btn-primary"> <i class='bx bx-plus'></i>Add Device</button> -->
+    </div>
+    <span class="navbar-brand">
+        <form method="POST" action="/search/{{'device'}}" class="d-flex justify-content-start py-3">
             <div class="col-auto">
-                <input type="submit" class="btn btn-primary mb-3" value="Search" id="search_button" onclick="verify()" disabled/> 
-                <!--<button id="search_button" class="btn btn-primary mb-3" type="submit" onclick="verify()" disabled>Search</button>-->
+                <input id="filter" class="form-control me-2" type="number" placeholder="Search Hastag.." aria-label="Search" name="search" onkeyup="stoppedTyping()">
             </div>
-        </div>
-    </form>
-</span>
-    Selamat datang report
+                <div class="col-auto">
+                    <input type="submit" class="btn btn-primary mb-3" value="Search" id="search_button" onclick="verify()" disabled/> 
+                    <!--<button id="search_button" class="btn btn-primary mb-3" type="submit" onclick="verify()" disabled>Search</button>-->
+                </div>
+            </div>
+        </form>
+    </span>
+    <table id="myTable" class="table table-borderless">
+        <thead class="table-light border-0 ">
+            <tr>
+                <th scope="col ">HASTAG</th>
+                <th scope="col ">ID</th>
+                <th scope="col ">STATUS</th>
+                <th scope="col ">ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in listPage %}
+            <tr class="data">
+                <td>{{row['HASTAG']}}</td>
+                <td>{{row['ID']}}</td>
+                <td>
+                    {% if row['STATUSDEVICE'] == 'NOT ALLOCATED' %}
+                    <span class="badge rounded-pill bg-danger">{{row['STATUSDEVICE']}}</span>
+                    {% elif row['STATUSDEVICE'] == 'ALLOCATED' %}
+                    <span class="badge rounded-pill bg-success">{{row['STATUSDEVICE']}}</span>
+                    {% else %}
+                    <span class="badge rounded-pill bg-warning">{{row['STATUSDEVICE']}}</span>
+                    {% endif %}
+                </td>
+                <td class="flex-row justify-content-between">
+                    <!-- <form action="/users" method="post"> -->
+                        <a href="/editdevice/{{row['_id']}}/page={{pages}}" class='btn p-1 bx bxs-edit bx-sm text-primary'></a>
+                        <a href="/deletedevice/{{row['_id']}}/page={{pages}}" class='btn p-1 bx bxs-trash bx-sm text-danger'></a>
+                    <!-- </form> -->
+                    
+                </td>
+            </tr>
+
+            {% endfor %}
+            
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
+{% block footer %}
+
+<nav aria-label="...">
+    <ul class="pagination">
+      <li class="page-item {% if pages-1 == 0 %} disabled {% endif %}">
+        <a class="page-link" href="/datadevice/page={{pages-1}}">Previous</a>
+      </li>
+      {% for i in range(totalPages) %}
+        <li class="page-item {% if i+1 == pages %} active {% endif %}" aria-current="page">
+            <a class="page-link" href="/datadevice/page={{ i+1 }}">{{ i+1 }}</a>
+        </li>
+      {% endfor %}
+      <li class="page-item {% if (pages == totalPages) %} disabled {% endif %} "> 
+        <a class="page-link" href="/datadevice/page={{pages+1}}">Next</a>
+      </li>
+    </ul>
+</nav>
 
 {% endblock %}

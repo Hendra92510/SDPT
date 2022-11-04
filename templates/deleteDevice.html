@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% block title %} SDT {% endblock %}
+{% block modal %}
+
+<div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <!-- <form action="/users" method="post"> -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Delete device</h5>
+                </div>
+                <h1 class="bi bi-x-circle" style="color:red;font-size:80px; text-align: center;"></h1>
+                <b style="text-align:center; font-size: 24px;"> Menghapus Hastag <br> {{ data['HASTAG'] }}</b>
+                <br>
+                <a style="color: #848484; font-size: 18px; text-align: center; font-family: Arial, Helvetica, sans-serif;">Anda yakin untuk menghapus dokumen ini?</a>
+                <div class="modal-footer">
+                    <form action="/submit_deleted/{{data['_id']}}" class="was-validated", method="POST">
+                        <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
+                    </form>
+                    <!-- <form action="/datapenggunaDami"class="was-validated"> -->
+                    <button onclick="history.back()" type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <!-- </form> -->
+                    
+                </div>
+            </div>
+            <div data-bs-toggle="modal" data-bs-target="#popup"></div>
+        <!-- </form>   -->
+    </div>
+</div>
+
+{% endblock %}
+{% block head %}
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid py-3">
+            <a class="navbar-brand" href="/">
+                <img src="https://raw.githubusercontent.com/Hendra92510/SDPT/main/templates/Logo-Baru-Himpunan-.png" alt="" width="35" height="35"> 
+            SDT
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/datadeviceDami">Data Device</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/datapenggunaDami">Data Pengguna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/absen?kondisi=true">Absen</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/report">Report</a>
+                </li>
+            </ul>
+            
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-end py-2">
+        <!-- TOMBOL POPUP DAFTAR -->
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class='bx bx-plus'></i>
+            Add Device
+        </button>
+        <!-- <button type="submit" class="btn btn-primary"> <i class='bx bx-plus'></i>Add Device</button> -->
+    </div>
+    <span class="navbar-brand">
+        <form method="POST" action="" class="d-flex justify-content-start py-3">
+            <div class="col-auto">
+                <input id="filter" class="form-control me-2" type="number" placeholder="Search Hastag.." aria-label="Search" name="search" onkeyup="stoppedTyping()">
+            </div>
+                <div class="col-auto">
+                    <input type="submit" class="btn btn-primary mb-3" value="Search" id="search_button" onclick="verify()" disabled/> 
+                    <!--<button id="search_button" class="btn btn-primary mb-3" type="submit" onclick="verify()" disabled>Search</button>-->
+                </div>
+            </div>
+        </form>
+    </span>
+    <table id="myTable" class="table table-borderless">
+        <thead class="table-light border-0 ">
+            <tr>
+                <th scope="col ">HASTAG</th>
+                <th scope="col ">ID</th>
+                <th scope="col ">STATUS</th>
+                <th scope="col ">ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in listPage %}
+            <tr class="data">
+                <td>{{row['HASTAG']}}</td>
+                <td>{{row['ID']}}</td>
+                <td>
+                    {% if row['STATUSDEVICE'] == 'NOT ALLOCATED' %}
+                    <span class="badge rounded-pill bg-danger">{{row['STATUSDEVICE']}}</span>
+                    {% elif row['STATUSDEVICE'] == 'ALLOCATED' %}
+                    <span class="badge rounded-pill bg-success">{{row['STATUSDEVICE']}}</span>
+                    {% else %}
+                    <span class="badge rounded-pill bg-warning">{{row['STATUSDEVICE']}}</span>
+                    {% endif %}
+                </td>
+                <td class="flex-row justify-content-between">
+                    <!-- <form action="/users" method="post"> -->
+                        <a href="/editdevice/{{row['_id']}}/page={{pages}}" class='btn p-1 bx bxs-edit bx-sm text-primary'></a>
+                        <a href="/delete/{{row['_id']}}/page{{pages}}" class='btn p-1 bx bxs-trash bx-sm text-danger'></a>
+                    <!-- </form> -->
+                    
+                </td>
+            </tr>
+
+            {% endfor %}
+            
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
+{% block script %}
+    <script>
+        const input1 = document.querySelector("#filter");  
+        const btn = document.querySelector("#search_button");    
+        
+        // Use the same validation handler for both inputs
+        input1.addEventListener("input", validate); 
+        
+        function validate(){
+        // Check that neither input is empty
+        if(input1.value === ""){
+            btn.setAttribute("disabled","disabled");
+        } else {
+            btn.removeAttribute("disabled");  
+        }
+        }
+        
+        // $(window).on('load', function(){
+        //     $('#editModal').modal('show');
+        // });
+        $(document).ready(function(){
+            console.log("windows is loaded")
+            $("#delete").modal("show")
+        })
+        
+    </script>
+
+{% endblock %}
+{% block footer %}
+
+<nav aria-label="...">
+    <ul class="pagination">
+      <li class="page-item {% if pages-1 == 0 %} disabled {% endif %}">
+        <a class="page-link" href="./page{{pages-1}}">Previous</a>
+      </li>
+      {% for i in range(totalPages) %}
+        <li class="page-item {% if i+1 == pages %} active {% endif %}" aria-current="page">
+            <a class="page-link" href="./page{{ i+1 }}">{{ i+1 }}</a>
+        </li>
+      {% endfor %}
+      <li class="page-item {% if (pages == totalPages) %} disabled {% endif %} "> 
+        <a class="page-link" href="./page{{pages+1}}">Next</a>
+      </li>
+    </ul>
+</nav>
+
+{% endblock %}

@@ -49,3 +49,6 @@ siapkan variabel di dalam .env untuk user dan password. contoh:
 lalu masukkan .env ke gitignore
 lakukan koneksi seperti pymongo pada umumnya dengan alamat mongodb yang di dapat
 tambahkan environment variable di app heroku (nama var harus sama)
+
+========================
+url mongo = mongodb+srv://sdpt:Wara03170310409@cluster1.2cvf8kn.mongodb.net/?retryWrites=true&w=majority

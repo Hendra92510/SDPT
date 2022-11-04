@@ -25,12 +25,49 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success" data-bs->Submit</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success" data-bs->Submit</button>
                     </div>
                 </div>
                 <div data-bs-toggle="modal" data-bs-target="#popup"></div>
             </form>  
+        </div>
+    </div>
+
+    <!-- Modal edit -->
+    <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="/submit_edit/{{data['_id']}}" class="was-validated", method="POST">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Edit pengguna</h5>
+                        <!-- <a href="/datapenggunaDami" class='btn-close' data-bs-dismiss="modal" aria-label="Close"></a> -->
+                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3 mt-3">
+                            <label for="nama" class="form-label">Nama</label>
+                            <input type="text" value="{{data['NAMA']}}" class="form-control" id="nama" name="nama" required>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <label for="nim" class="form-label">NIM</label>
+                            <input type="number" value="{{data['NIM']}}" class="form-control" id="nim" name="nim" required>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <label for="prodi" class="form-label">Prodi</label>
+                            <input type="text" value="{{data['PRODI']}}" class="form-control" id="prodi" name="prodi" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" data-bs->Submit</button>
+            </form>
+                        <!-- <form action="/datapenggunaDami"class="was-validated"> -->
+                        <button onclick="history.back()" type="submit" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <!-- </form> -->
+                    </div>
+                </div>
+                <div data-bs-toggle="modal" data-bs-target="#popup"></div>
+              
         </div>
     </div>
 
@@ -54,7 +91,7 @@
                 <a class="nav-link" href="/datadeviceDami">Data Device</a>
                 </li>
                 <li class="nav-item">
-                    <a class="list-group-item active" href="/datapenggunaDami">Data Pengguna</a>
+                    <a class="nav-link" href="/datapenggunaDami">Data Pengguna</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/absen?kondisi=true">Absen</a>
@@ -68,25 +105,6 @@
         </div>
     </nav>
 {% endblock %}
-{% block script %}
-    <script>
-        const input1 = document.querySelector("#filter");  
-        const btn = document.querySelector("#search_button");    
-        
-        // Use the same validation handler for both inputs
-        input1.addEventListener("input", validate); 
-        
-        function validate(){
-        // Check that neither input is empty
-        if(input1.value === ""){
-            btn.setAttribute("disabled","disabled");
-        } else {
-            btn.removeAttribute("disabled");  
-        }
-        }    
-    </script>
-
-{% endblock %}
 {% block content %}
 
 <div class="container-fluid">
@@ -98,7 +116,7 @@
         <!-- <button type="submit" class="btn btn-primary"> <i class='bx bx-plus'></i>Add Device</button> -->
     </div>
     <span class="navbar-brand">
-        <form method="POST" action="/search/{{'pengguna'}}" class="d-flex justify-content-start py-3">
+        <form method="POST" action="" class="d-flex justify-content-start py-3">
             <div class="col-auto">
                 <input id="filter" class="form-control me-2" type="number" placeholder="Search NIM.." aria-label="Search" name="search" onkeyup="stoppedTyping()">
             </div>
@@ -126,10 +144,11 @@
                 <td>{{row['PRODI']}}</td>
                 <td class="flex-row justify-content-between">
                     <!-- <form action="/users" method="post"> -->
-                        <a href="/infopengguna/{{row['_id']}}/page={{pages}}" class='btn p-1 bx bxs-info-circle bx-sm text-primary'></a>
-                        <a href="/editpengguna/{{row['_id']}}/page={{pages}}" class='btn p-1 bx bxs-edit bx-sm text-primary'></a>
-                        <a href="/deletepengguna/{{row['_id']}}/page={{pages}}" class='btn p-1 bx bxs-trash bx-sm text-danger'></a>
+                        <a href="/history/{{row['_id']}}" class='btn p-1 bx bxs-info-circle bx-sm text-primary'></a>
+                        <a href="/edit/{{row['_id']}}" class='btn p-1 bx bxs-edit bx-sm text-primary'></a>
+                        <a href="/delete/{{row['_id']}}/page{{pages}}" class='btn p-1 bx bxs-trash bx-sm text-danger'></a>
                     <!-- </form> -->
+                    
                 </td>
             </tr>
 
@@ -141,22 +160,47 @@
 
 
 {% endblock %}
+{% block script %}
+    <script>
+        const input1 = document.querySelector("#filter");  
+        const btn = document.querySelector("#search_button");    
+        
+        // Use the same validation handler for both inputs
+        input1.addEventListener("input", validate); 
+        
+        function validate(){
+        // Check that neither input is empty
+        if(input1.value === ""){
+            btn.setAttribute("disabled","disabled");
+        } else {
+            btn.removeAttribute("disabled");  
+        }
+        }
+        $(document).ready(function(){
+            console.log("windows is loaded")
+            $("#editModal").modal("show")
+        })
+        
+    </script>
+
+{% endblock %}
 {% block footer %}
 
 <nav aria-label="...">
     <ul class="pagination">
       <li class="page-item {% if pages-1 == 0 %} disabled {% endif %}">
-        <a class="page-link" href="/datapengguna/page={{pages-1}}">Previous</a>
+        <a class="page-link" href="./page{{pages-1}}">Previous</a>
       </li>
       {% for i in range(totalPages) %}
         <li class="page-item {% if i+1 == pages %} active {% endif %}" aria-current="page">
-            <a class="page-link" href="/datapengguna/page={{ i+1 }}">{{ i+1 }}</a>
+            <a class="page-link" href="./page{{ i+1 }}">{{ i+1 }}</a>
         </li>
       {% endfor %}
       <li class="page-item {% if (pages == totalPages) %} disabled {% endif %} "> 
-        <a class="page-link" href="/datapengguna/page={{pages+1}}">Next</a>
+        <a class="page-link" href="./page{{pages+1}}">Next</a>
       </li>
     </ul>
 </nav>
 
 {% endblock %}
+

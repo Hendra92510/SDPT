@@ -12,32 +12,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3 mt-3">
-                            <label for="group" class="form-label">Group</label>
-                            <input type="text" class="form-control" id="group" name="group" required>
-                        </div>
-                        <div class="mb-3 mt-3">
                             <label for="hastag" class="form-label">Hastag</label>
                             <input type="number" class="form-control" id="hastag" name="hastag" required>
                         </div>
                         <div class="mb-3 mt-3">
-                            <label for="imei" class="form-label">Imei</label>
-                            <input type="number" class="form-control" id="imei" name="imei" required>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <label for="macaddr" class="form-label">Mac Address</label>
-                            <input type="number" class="form-control" id="macaddr" name="macaddr" required>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <label for="msidn" class="form-label">Msidn</label>
-                            <input type="number" class="form-control" id="msidn" name="msidn" required>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <label for="status" class="form-label">Status Device</label>
-                            <input type="text" class="form-control" id="status" name="status" required>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <label for="unit" class="form-label">Unit ID</label>
-                            <input type="text" class="form-control" id="unit" name="unit" required>
+                            <label for="imei" class="form-label">ID</label>
+                            <input type="number" class="form-control" id="ID" name="ID" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -79,6 +59,7 @@
                 <a class="nav-link" href="/report">Report</a>
                 </li>
             </ul>
+            
             </div>
         </div>
     </nav>
@@ -103,18 +84,44 @@
 
 {% endblock %}
 {% block content %}
-<span class="navbar-brand">
-    <form method="POST" action="" class="d-flex justify-content-start py-3">
-        <div class="col-auto">
-            <input id="filter" class="form-control me-2" type="number" placeholder="Search Hastag.." aria-label="Search" name="search" onkeyup="stoppedTyping()">
-        </div>
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-end py-2">
+        <!-- TOMBOL POPUP DAFTAR -->
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class='bx bx-plus'></i>
+            Add Device
+        </button>
+        <!-- <button type="submit" class="btn btn-primary"> <i class='bx bx-plus'></i>Add Device</button> -->
+    </div>
+    <span class="navbar-brand">
+        <form method="POST" action="" class="d-flex justify-content-start py-3">
             <div class="col-auto">
-                <input type="submit" class="btn btn-primary mb-3" value="Search" id="search_button" onclick="verify()" disabled/> 
-                <!--<button id="search_button" class="btn btn-primary mb-3" type="submit" onclick="verify()" disabled>Search</button>-->
+                <input id="filter" class="form-control me-2" type="number" placeholder="Search Hastag.." aria-label="Search" name="search" onkeyup="stoppedTyping()">
             </div>
-        </div>
-    </form>
-</span>
-    Selamat datang report
+                <div class="col-auto">
+                    <input type="submit" class="btn btn-primary mb-3" value="Search" id="search_button" onclick="verify()" disabled/> 
+                    <!--<button id="search_button" class="btn btn-primary mb-3" type="submit" onclick="verify()" disabled>Search</button>-->
+                </div>
+            </div>
+        </form>
+    </span>
+    <div class="alert alert-warning" role="alert">
+        Search result for Nim : <b>{{src}}, </b> klik <a href="/datadeviceDami" class="alert-link"> here </a> To back.
+    </div>
+    <table id="myTable" class="table table-borderless">
+        <thead class="table-light border-0 ">
+            <tr>
+                <th scope="col ">HASTAG</th>
+                <th scope="col ">ID</th>
+                <th scope="col ">STATUS</th>
+                <th scope="col ">ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
 
 {% endblock %}
+

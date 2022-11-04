@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} EMC {% endblock %}
+{% block title %} SDT {% endblock %}
 {% block modal %}
     <!-- Modal daftar -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -53,10 +53,10 @@
 {% endblock %}
 {% block head %}
     <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
+        <div class="container-fluid py-3">
             <a class="navbar-brand" href="/">
-                <img src="https://github.com/Hendra92510/SDPT/blob/main/templates/Logo-Baru-Himpunan-.png" alt="" width="30" height="24">
-                SDPT
+                    <img src="https://raw.githubusercontent.com/Hendra92510/SDPT/main/templates/Logo-Baru-Himpunan-.png" alt="" width="35" height="35"> 
+                SDT
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -67,7 +67,13 @@
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="./datapengguna">Data Pengguna</a>
+                <a class="nav-link" href="./datadeviceDami">Data Device</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/datapenggunaDami">Data Pengguna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/absen?kondisi=true">Absen</a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="./report">Report</a>
@@ -78,7 +84,7 @@
     </nav>
 {% endblock %}
 {% block content %}
-
+    
     Selamat datang Home
 
 {% endblock %}

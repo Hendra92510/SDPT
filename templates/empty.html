@@ -4,45 +4,29 @@
     <!-- Modal daftar -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form action="/add_user" class="was-validated", method="POST">
+            <form action="/add_pengguna" class="was-validated", method="POST">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Add Device</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">Add Pengguna</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3 mt-3">
-                            <label for="group" class="form-label">Group</label>
-                            <input type="text" class="form-control" id="group" name="group" required>
+                            <label for="hastag" class="form-label">Nama</label>
+                            <input type="text" class="form-control" id="nama" name="nama" required>
                         </div>
                         <div class="mb-3 mt-3">
-                            <label for="hastag" class="form-label">Hastag</label>
-                            <input type="number" class="form-control" id="hastag" name="hastag" required>
+                            <label for="imei" class="form-label">NIM</label>
+                            <input type="number" class="form-control" id="nim" name="nim" required>
                         </div>
                         <div class="mb-3 mt-3">
-                            <label for="imei" class="form-label">Imei</label>
-                            <input type="number" class="form-control" id="imei" name="imei" required>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <label for="macaddr" class="form-label">Mac Address</label>
-                            <input type="number" class="form-control" id="macaddr" name="macaddr" required>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <label for="msidn" class="form-label">Msidn</label>
-                            <input type="number" class="form-control" id="msidn" name="msidn" required>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <label for="status" class="form-label">Status Device</label>
-                            <input type="text" class="form-control" id="status" name="status" required>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <label for="unit" class="form-label">Unit ID</label>
-                            <input type="text" class="form-control" id="unit" name="unit" required>
+                            <label for="status" class="form-label">Prodi</label>
+                            <input type="text" class="form-control" id="prodi" name="prodi" required>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-success" data-bs->Submit</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </div>
                 <div data-bs-toggle="modal" data-bs-target="#popup"></div>
@@ -79,6 +63,7 @@
                 <a class="nav-link" href="/report">Report</a>
                 </li>
             </ul>
+            
             </div>
         </div>
     </nav>
@@ -103,18 +88,41 @@
 
 {% endblock %}
 {% block content %}
-<span class="navbar-brand">
-    <form method="POST" action="" class="d-flex justify-content-start py-3">
-        <div class="col-auto">
-            <input id="filter" class="form-control me-2" type="number" placeholder="Search Hastag.." aria-label="Search" name="search" onkeyup="stoppedTyping()">
-        </div>
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-end py-2">
+        <!-- TOMBOL POPUP DAFTAR -->
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class='bx bx-plus'></i>
+            Add User
+        </button>
+        <!-- <button type="submit" class="btn btn-primary"> <i class='bx bx-plus'></i>Add Device</button> -->
+    </div>
+    <span class="navbar-brand">
+        <form method="POST" action="" class="d-flex justify-content-start py-3">
             <div class="col-auto">
-                <input type="submit" class="btn btn-primary mb-3" value="Search" id="search_button" onclick="verify()" disabled/> 
-                <!--<button id="search_button" class="btn btn-primary mb-3" type="submit" onclick="verify()" disabled>Search</button>-->
+                <input id="filter" class="form-control me-2" type="number" placeholder="Search Hastag.." aria-label="Search" name="search" onkeyup="stoppedTyping()">
             </div>
-        </div>
-    </form>
-</span>
-    Selamat datang report
+                <div class="col-auto">
+                    <input type="submit" class="btn btn-primary mb-3" value="Search" id="search_button" onclick="verify()" disabled/> 
+                    <!--<button id="search_button" class="btn btn-primary mb-3" type="submit" onclick="verify()" disabled>Search</button>-->
+                </div>
+            </div>
+        </form>
+    </span>
+    <table id="myTable" class="table table-borderless">
+        <thead class="table-light border-0 ">
+            <tr>
+                <th scope="col ">NAMA</th>
+                <th scope="col ">NIM</th>
+                <th scope="col ">PRODI</th>
+                <th scope="col ">ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</div>
+
 
 {% endblock %}
