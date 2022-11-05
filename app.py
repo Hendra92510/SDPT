@@ -23,9 +23,9 @@ try:
     #     ,connect=False,
     #     serverSelectionTimeoutMS = 1000
     # )
-    db = cluster['test']
-    collection = db['hendra']
-    collectionPengguna = db['pengguna']
+    db = cluster['tugasAkhir']
+    collection = db['dataDevice']
+    collectionPengguna = db['dataPengguna']
     collectionAbsen = db['absen']
 
     # DbRead = collectionPengguna.find({"NIM":"19410200019"}).sort("_id", pymongo.ASCENDING)
