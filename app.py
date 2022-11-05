@@ -73,7 +73,7 @@ def datapenggunaUtama(paging):
     if(len(coba)) != 0:
         DbRead = collectionPengguna.find().sort("_id", pymongo.ASCENDING)
         pages = int(paging)
-        limit = 6
+        limit = 5
         starting = DbRead
         last = starting[(pages-1)*limit]["_id"]
         page = collectionPengguna.find({"_id":{'$gte':last}}).sort("_id", pymongo.ASCENDING).limit(int(limit))
@@ -116,7 +116,7 @@ def edit(id, paging):
     if(len(coba)) != 0:
         DbRead = collectionPengguna.find().sort("_id", pymongo.ASCENDING)
         pages = int(paging)
-        limit = 6
+        limit = 5
         starting = DbRead
         last = starting[(pages-1)*limit]["_id"]
         page = collectionPengguna.find({"_id":{'$gte':last}}).sort("_id", pymongo.ASCENDING).limit(int(limit))
@@ -160,7 +160,7 @@ def deletepengguna(id, paging):
     if(len(coba)) != 0:
         DbRead = collectionPengguna.find().sort("_id", pymongo.ASCENDING)
         pages = int(paging)
-        limit = 6
+        limit = 5
         starting = DbRead
         last = starting[(pages-1)*limit]["_id"]
         page = collectionPengguna.find({"_id":{'$gte':last}}).sort("_id", pymongo.ASCENDING).limit(int(limit))
@@ -196,7 +196,7 @@ def infopengguna(id, paging):
     if(len(coba)) != 0:
         DbRead = collectionPengguna.find().sort("_id", pymongo.ASCENDING)
         pages = int(paging)
-        limit = 6
+        limit = 5
         starting = DbRead
         last = starting[(pages-1)*limit]["_id"]
         page = collectionPengguna.find({"_id":{'$gte':last}}).sort("_id", pymongo.ASCENDING).limit(int(limit))
