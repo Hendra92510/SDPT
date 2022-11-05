@@ -16,6 +16,7 @@ app = Flask(__name__)
 try:
     cluster = MongoClient(
         database.DATABASE_URL
+        #serverSelectionTimeoutMS = 1000
     )
     # cluster = MongoClient(
     #     'mongodb+srv://sdpt:Wara03170310409@cluster1.2cvf8kn.mongodb.net/?retryWrites=true&w=majority'
@@ -43,7 +44,7 @@ try:
     # datetime_object = datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
     # print(datetime_object)
     #collectionPengguna.insert_one({"_id" : 10000})
-    # collection.insert_one({"_id":1000}) 
+    collection.insert_one({"_id":1000}) 
 except:
     print("ERROR - Cannot connect to db")
 ###########################################
