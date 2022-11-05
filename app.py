@@ -88,7 +88,7 @@ def datapenggunaUtama(paging):
             jumlahPages = alldata / limit
             
         
-        return render_template("datapengguna.html", listPage = listPage, listUser = DbRead, pages = pages, totalPages = int(jumlahPages))
+        return render_template("dataPengguna.html", listPage = listPage, listUser = DbRead, pages = pages, totalPages = int(jumlahPages))
     else :
         return render_template("empty.html")
 
